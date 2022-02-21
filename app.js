@@ -34,13 +34,16 @@ const displayController = (() =>{
 
     restartButton.addEventListener('click', (event) => {
 
-        gameBoard.reset();
-        displayController.reset();
+        reset();
     })
     const reset = () => {
         for(let i = 0; i < 9; i++){
             gameBoard.reset();
-            gridButtons[i].textContent = "";
+            setResultMessage("Player X's turn");
+            gameFlow.setCount(1);
+            updateGameBoard();
+            setRestartButton("Restart");
+            gameFlow.setIsOver(false);
         }
     }
 
@@ -57,12 +60,18 @@ const displayController = (() =>{
         for(let i = 0; i < 9; i++){
             gridButtons[i].textContent = gameBoard.getField(i);
         }
+        return;
     }
     const setResultMessage = (newMessage) => {
-        console.log("hello");
+        
         message.textContent = newMessage;
     }
-    return {setResultMessage};
+
+    const setRestartButton = (str) => {
+        restartButton.textContent = str;
+    }
+
+    return {setResultMessage, setRestartButton};
     
 })();
 
@@ -77,13 +86,17 @@ const gameFlow = (() => {
 
         let sign = getPlayerSign();
         gameBoard.setField(sign, index - 1);
-        isOver = checkWin();
-        console.log(sign);
+        if(count == 9){
+            displayController.setResultMessage("It's a tie");
+            isOver = true;
+        }
+        checkWin();
         if(isOver){
+            displayController.setRestartButton("Play Again");
             return;
         }
         if(sign == 'X'){
-            console.log("wtf");
+            //console.log("wtf");
             displayController.setResultMessage("Player O's turn");
         }
         else if(sign == 'O'){
@@ -93,7 +106,7 @@ const gameFlow = (() => {
         count++;
 
     }
-    let winConditions = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9]];
+    let winConditions = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
 
     const getPlayerSign = () => {
         if(count % 2  == 1){
@@ -103,16 +116,34 @@ const gameFlow = (() => {
             return Persony.getSign();
         }
     }
+    const setIsOver = (newIsOVer) => {
+        isOver = newIsOVer;
+        return;
+    } 
+    const setCount = (cnt) => {
+        count = cnt;
+        return;
+    }
     const getIsOver = () =>{
         return isOver;
     }
     const checkWin = () => {
 
-
+        
+        for(let i = 0; i<8; i++){
+            
+            if((gameBoard.getField(winConditions[i][0]) != "") &&  (gameBoard.getField(winConditions[i][0]) == gameBoard.getField(winConditions[i][1])) && (gameBoard.getField(winConditions[i][1]) == gameBoard.getField(winConditions[i][2]))){
+                let whoWin = gameBoard.getField(winConditions[i][0]);
+                displayController.setResultMessage(`Player ${whoWin} won the game!`);
+                isOver = true;
+                count = 1;
+            } 
+        }
+        return;
 
     }
 
-    return {getIsOver, playRound};
+    return {getIsOver, playRound, setCount, setIsOver};
 
 })();
 
