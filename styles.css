@@ -1,0 +1,74 @@
+body{
+    margin: 0;
+    background-color: rgb(168, 155, 155);
+}
+.container{
+    display: flex;
+    flex-direction: column;
+
+}
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    background-color: rgb(216, 216, 10);
+    padding: 1rem ;
+    color: rgb(60, 143, 102)
+}
+.turn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    color:#B8405E;
+    margin-top: 2rem;
+    font-weight: bold;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3, 8rem);
+    grid-template-rows: repeat(3, 8rem);
+    margin-left: 39.5vw;
+    margin-top: 7vh;
+    
+}
+.restart{
+    align-self: center;
+    width: 10vw;
+    height: 5vh;
+    margin-top: 5vh;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #21325E;
+    color: #BFFFF0;
+    border-radius: 7px;
+}
+.item{
+    border-radius: 5px;
+    background-color: #24A19C;
+    font-size: 70px;
+    color: #B8405E;
+}
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    gap: 20px;
+    bottom: 0;
+    width: 100%;
+    font-size: 35px;
+    padding-top : 10px;
+    padding-bottom: 10px;
+}
+.github-div{
+    width: 50px;
+    height: 50px;
+    
+}
+.github{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
